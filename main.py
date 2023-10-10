@@ -79,7 +79,6 @@ class MainScreen(BoxLayout):
 
     def copy_kw(self, *args):
             if k_press[0] == m_click[0] == m_move[0] == 1:
-                print('in while loop')
                 self.flag = True
                 copy_selection()
             if k_press[0] == m_click[0] == 0:
@@ -93,13 +92,12 @@ class MainScreen(BoxLayout):
         self.flag = False
         try:
             if k_release[0] == 1:
-                print('that\'s something')
                 key_word = Clipboard.paste()
                 search_paste = search(kw=key_word)
                 self.input_txt = (f'You were searching for -> {key_word}\n\nWith the result of -> {search_paste}')
                 self.status_txt = 'Results In: '
         except AttributeError:
-            print('try again!')
+          pass
 
 
 
