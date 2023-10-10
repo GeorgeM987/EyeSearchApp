@@ -1,0 +1,118 @@
+
+
+<MainScreen>:
+    orientation: 'vertical'
+    canvas:
+        Color:
+            rgba: [0.1, 0.1, 0.1, 0.25]
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    BoxLayout:
+        size_hint_max_y: dp(35)
+        padding: dp(10)
+        spacing: dp(10)
+        BoxLayout:
+            size_hint: [None, None]
+            width: dp(20)
+            height: dp(20)
+            ToggleButton:
+                canvas.before:
+                    Color:
+                        rgba: [1, 1, 1, 1]
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [(5, 5), (5, 5), (5, 5), (5, 5)]
+                state: 'normal' if root.tbtn_state == str(0) else 'down'
+                background_normal: './icons/application-export.png'
+                background_down: './icons/application-import.png'
+                background_color: [0.5, 0.5, 0.5, 0.25] if self.state == 'down' else [1, 1, 1, 1]
+                on_state: root.borderless(self)
+
+        Label:
+            size_hint_min_x: dp(70)
+            text: root.status_txt
+            font_size: sp(18)
+            color: '#d97d0d'
+        BoxLayout:
+            size_hint: [None, 1]
+            width: (self.parent.width * 0.70)
+            ProgressBar:
+                value: (int(root.kwph_txt) * self.max) / root.MAX_KWPH
+                max: 100
+            BoxLayout:
+                size_hint: [None, 1]
+                width: dp(75)
+                Label:
+                    text: str(int(root.kwph_txt))
+                    font_size: sp(20)
+                    font_name: './fonts/Lcd.ttf'
+                    color: '#d97d0d'
+                BoxLayout:
+                    size_hint: [None, 1]
+                    width: (self.parent.width * 0.5)
+                    padding: [dp(-12), dp(10), dp(0), dp(0)]
+                    Label:
+                        text: "kwph"
+                        font_size: sp(14)
+                        color: '#d97d0d'
+
+    BoxLayout:
+        padding: [dp(10), dp(0), dp(10), dp(0)]
+        size_hint: [1.0, None]
+        height: (root.height * 0.8)
+        TextInput:
+            id: text_input
+            hint_text: 'A brief description of your key-word will be displayed here...'
+            text: root.input_txt
+            multiline: True
+
+    BoxLayout:
+        size_hint_min_y: dp(42)
+        padding: dp(10)
+        spacing: dp(10)
+        BoxLayout:
+            orientation: 'vertical'
+            spacing: dp(1)
+            padding: [dp(25), dp(0), dp(25), dp(0)]
+            size_hint: [None, 1]
+            width: dp(100)
+            canvas.before:
+                Color:
+                    rgba: [1, 1, 1, 1]
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [(10, 10), (10, 10), (10, 10), (10, 10)]
+            Label:
+                text: f'Remaining T: {root.elapsed_time}'
+                font_size: sp(12)
+                bold: True
+                color: [0, 0, 0, 1]
+            Label:
+                text: root.current_time
+                font_size: sp(12)
+                font_name: './fonts/Lcd.ttf'
+                color: [0, 0, 0, 1]
+        AnchorLayout:
+            anchor_x: 'right'
+            anchor_y: 'bottom'
+        BoxLayout:
+            size_hint: [None, 1.0]
+            width: dp(100) if exit_label.text == root.exit_text else dp(300)
+            Label:
+                id: exit_label
+                text: root.exit_footer_text
+                font_size: sp(12)
+                color: '#d97d0d'
+        BoxLayout:
+            size_hint: [None, 1.0]
+            width: dp(100)
+            BubbleButton:
+                on_press: root.exit_btn(self)
+                background_color: 'white'
+                text: 'E S C'
+                font_size: sp(12)
+                color: '#d97d0d'
